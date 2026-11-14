@@ -1,0 +1,43 @@
+@use 'config' as *;
+@use 'typography' as *;
+@use 'mixins' as *;
+
+.database {
+  @include panel;
+  display: grid;
+  gap: $spacing-5;
+  padding: $spacing-6 $spacing-8;
+  min-width: 0;
+
+  h2 {
+    font-size: $font-size-heading;
+  }
+}
+
+.database-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $spacing-4;
+}
+
+.database-tabs {
+  display: flex;
+  gap: $spacing-2;
+}
+
+.database-tab {
+  padding: $spacing-1 $spacing-6;
+  border: $border-width solid $color-line;
+  border-radius: $radius-pill;
+  background: $color-panel;
+  @include code($font-size-xs);
+  color: $color-ink-soft;
+
+  &[aria-selected='true'] {
+    background: $color-ink;
+    border-color: $color-ink;
+    color: $color-white;
+  }
+}

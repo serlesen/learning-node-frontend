@@ -1,0 +1,38 @@
+@use 'config' as *;
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: $spacing-8;
+  padding: $spacing-8;
+  min-height: 0;
+
+  @media (max-width: $breakpoint-desktop - 1) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.column {
+  display: grid;
+  gap: $spacing-8;
+  min-height: 0;
+  min-width: 0;
+}
+
+.column-code {
+  grid-template-rows: minmax(0, auto) minmax(260px, 1fr);
+
+  @media (max-width: $breakpoint-desktop - 1) {
+    grid-template-rows: auto 380px;
+  }
+}
+
+// The client, the tables, the log and the checks stack up: on a desktop, the column scrolls on its own.
+.column-api {
+  align-content: start;
+
+  @media (min-width: $breakpoint-desktop) {
+    overflow-y: auto;
+    padding-right: $spacing-2;
+  }
+}
