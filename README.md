@@ -74,18 +74,19 @@ src/
 │   ├── button/         Button (primary, secondary, quiet)
 │   ├── icons/          SVG icons as React components, drawn with currentColor
 │   ├── language-select/ LanguageSelect: switches and saves the interface language
+│   ├── more-games/     MoreGames: the top bar menu linking the other games of the series
 │   ├── rich-text/      RichText: text where `backticks` mark inline code
 ├── hooks/              useDebounced (restart once typing stops), useErrorText (translated run errors),
 │                       useCodeComments (translated code comments), useSqlEngine (loads sql.js),
 │                       useLiveServer (the running server), useChecks (runs the checks of the step)
 ├── i18n/               i18next setup and locales/<en|fr|es|it|de>/translation.json
-├── layout/             PublicLayout: top bar with the brand, the step strip and the language selector; Footer
+├── layout/             PublicLayout: top bar with the brand, the step strip, the More games menu and the language selector; Footer
 ├── services/           progressService and languageService (localStorage), sqlEngine (loads SQLite once)
 ├── stores/             progressStore (zustand): current step, completed steps, code and hints per step
 ├── styles/             _config.scss (tokens), _typography.scss, _mixins.scss, global.scss
 ├── test/               shared test setup, render helper, loadTestEngine (sql.js from node_modules)
 ├── types/              enums (HttpMethod, Outcome, LogKind, LogLevel, Notice, RunError, CheckStatus, EditorTab,
-│                       ClientTab, CharKind, ButtonVariant, Language, FooterLink) and JSDoc entities
+│                       ClientTab, CharKind, ButtonVariant, Language, FooterLink, Game) and JSDoc entities
 ├── utils/              express (the Express-style app and router), request and response (req, res), server
 │                       (runs server.js), database (the db the code requires), checks, body, statusText, host,
 │                       loopGuard and scan (stop endless loops), formatValue (console output), codeComments
