@@ -624,5 +624,30 @@
         "badQuantity": "A quantity of 0 answers `400`"
       }
     }
+  },
+  "moreGames": {
+    "label": "More games",
+    "games": {
+      "html": {
+        "badge": "HTML",
+        "name": "Brick by Brick",
+        "tagline": "Learn HTML and CSS by building with bricks"
+      },
+      "js": {
+        "badge": "JS",
+        "name": "Brick Shop",
+        "tagline": "Learn JavaScript and the DOM in a toy shop"
+      },
+      "sql": {
+        "badge": "SQL",
+        "name": "Brick by Brick SQL",
+        "tagline": "Learn SQL by querying a brick shop"
+      },
+      "node": {
+        "badge": "Node",
+        "name": "Brick Shop API",
+        "tagline": "Learn Node.js and Express by building an API"
+      }
+    }
   }
 }
