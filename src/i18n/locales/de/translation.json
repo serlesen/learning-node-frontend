@@ -19,6 +19,17 @@
     "linkedin": "LinkedIn",
     "blog": "Blog"
   },
+    "screenNotice": {
+      "small": {
+        "title": "Hey, du brauchst vielleicht einen größeren Bildschirm, um alle Inhalte zu sehen",
+        "text": "Dieser Kurs funktioniert am besten in einem Fenster mit mindestens 1280 Pixeln Breite. Vergrößere dein Fenster oder mach trotzdem weiter.",
+        "continue": "Trotzdem weitermachen"
+      },
+      "mobile": {
+        "title": "Glaubst du wirklich, dass du auf einem Handy etwas entwickeln kannst?",
+        "text": "Nimm lieber einen Desktop-Rechner."
+      }
+    },
   "codeComments": {
     "helloRoute": "Beantworte GET /hello mit dem Text Brick Shop API",
     "sendObject": "Schick stattdessen ein Objekt: { name: 'Brick Shop', open: true }",
