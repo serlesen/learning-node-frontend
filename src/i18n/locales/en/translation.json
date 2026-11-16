@@ -1,0 +1,617 @@
+{
+  "app": {
+    "name": "Brick Shop API",
+    "title": "Brick Shop API: learn Node.js and Express",
+    "description": "Learn backend development with Node.js and Express by building the API of a toy brick shop: routes, JSON, CRUD, status codes, middleware, errors and SQL in 20 guided steps."
+  },
+  "language": {
+    "label": "Language",
+    "names": {
+      "en": "English",
+      "fr": "Français",
+      "es": "Español",
+      "it": "Italiano",
+      "de": "Deutsch"
+    }
+  },
+  "footer": {
+    "github": "Source code on GitHub",
+    "linkedin": "LinkedIn",
+    "blog": "Blog"
+  },
+  "codeComments": {
+    "helloRoute": "Answer GET /hello with the text Brick Shop API",
+    "sendObject": "Send an object instead: { name: 'Brick Shop', open: true }",
+    "sendBricks": "Answer with the bricks array, as JSON",
+    "alwaysText": "always text",
+    "filterByColor": "When there is a color, answer only the bricks of that color",
+    "paramIsText": "req.params.id is text: '2' is not 2",
+    "answer404": "No brick? Answer 404 with { error: 'Brick not found' }",
+    "readBody": "Build the brick from req.body, give it nextId++ as id and add it to bricks",
+    "answer201": "Answer 201 Created with the new brick",
+    "validateFirst": "First answer 400 when the name is missing or the price is not a number",
+    "replaceAtIndex": "Answer 404 when index is -1, otherwise replace the brick with req.body, keeping its id",
+    "patchOnlySent": "Only the fields sent should change: keep the others",
+    "removeBrick": "Remove the brick and answer 204, or 404 when it doesn't exist",
+    "restUrls": "Turn this into GET /bricks/:id/orders, with 404 for an unknown brick",
+    "callNext": "Nothing answers: hand the request over to the routes",
+    "headerAnyCase": "any case works",
+    "checkKey": "401 without an X-API-Key header, 403 when it isn't brick-secret",
+    "errorHandlerLast": "Add an error handler here, after the routes",
+    "readFromDb": "Read the bricks from the database instead",
+    "neverGlue": "Never glue a value into SQL: use a ? placeholder",
+    "insertRow": "Insert the brick, then answer 201 with the row as the database stored it",
+    "forgotWhere": "Which bricks does this change?",
+    "noRowNotFound": "No row changed? The brick doesn't exist: 404",
+    "shopNeedsBricks": "The shop asks GET /bricks?inStock=true: only the bricks in stock",
+    "shopNeedsOrders": "The shop sends { brickId, quantity, customer }: store the order and answer 201"
+  },
+  "steps": {
+    "label": "Steps",
+    "step": "Step {{number}}: {{title}}",
+    "stepDone": "Step {{number}}: {{title}}, done",
+    "tooltip": "{{number}}. {{title}}"
+  },
+  "lesson": {
+    "meta": "Step {{step}} of {{total}}",
+    "goal": "Your goal: ",
+    "firstHint": "Need a hint?",
+    "nextHint": "Another hint",
+    "hintCount": "{{current}} of {{total}}",
+    "showSolution": "Show me the solution",
+    "confirmLabel": "Replace your code with the solution?",
+    "confirmText": "This replaces your code with the solution.",
+    "replaceCode": "Replace my code",
+    "keepTrying": "Keep trying",
+    "definition": "Definition"
+  },
+  "editor": {
+    "label": "Code editor",
+    "files": "File",
+    "tabs": {
+      "server": "server.js",
+      "shop": "shop.js"
+    },
+    "code": {
+      "server": "Server code",
+      "shop": "Code of the shop page"
+    },
+    "startOver": "Start over",
+    "run": "Run",
+    "runShortcut": "Restart the server with your code (Ctrl+Enter)",
+    "shopFixed": "The shop page is fixed: read <strong>shop.js</strong> to know what it asks the API, and write your routes in <strong>server.js</strong>."
+  },
+  "client": {
+    "label": "HTTP client",
+    "method": "Method",
+    "url": "URL",
+    "send": "Send",
+    "presets": "Try",
+    "preset": "Fill the client with {{request}}",
+    "tabs": {
+      "body": "Body",
+      "headers": "Headers"
+    },
+    "body": "Request body, in JSON",
+    "headers": "Request headers, one Name: value per line",
+    "response": "Response",
+    "empty": "Send a request to see what the server answers.",
+    "time": "{{ms}} ms",
+    "noBody": "No body",
+    "requestTabs": "Request parts",
+    "responseTabs": "Response parts",
+    "noResponse": "No response: the request is still waiting. Every route must end with `res.send()`, `res.json()`… or call `next()`.",
+    "timeout": "No response after {{seconds}} s: the request was given up.",
+    "stopped": "The server is stopped: fix the error shown in the server log, it restarts as soon as your code runs."
+  },
+  "log": {
+    "title": "Server log",
+    "empty": "Nothing yet. Requests, `console.log` output and errors show up here.",
+    "noResponse": "no response",
+    "timeout": "timed out",
+    "notices": {
+      "restarted": "Server restarted with your code",
+      "databaseLoading": "Loading the database…",
+      "databaseFailed": "The database could not be loaded: reload the page."
+    }
+  },
+  "database": {
+    "title": "Database",
+    "tables": "Tables",
+    "rows_one": "{{count}} row",
+    "rows_other": "{{count}} rows",
+    "noRows": "No rows",
+    "null": "NULL"
+  },
+  "shop": {
+    "label": "Shop page"
+  },
+  "errors": {
+    "syntax": "Syntax error: {{message}}",
+    "runtime": "{{name}}: {{message}}",
+    "infiniteLoop": "This loop never ends: it was stopped after {{count}} turns. Check its condition.",
+    "noApp": "There is no app: create one with `const app = express()`.",
+    "atLine": "{{error}} (line {{line}})"
+  },
+  "check": {
+    "title": "Checks",
+    "running": "Checking…",
+    "count_one": "{{passed}} of {{count}} check passed",
+    "count_other": "{{passed}} of {{count}} checks passed",
+    "status": {
+      "pass": "passed",
+      "fail": "not yet",
+      "error": "the server failed"
+    },
+    "solved": "Step complete!",
+    "finished": "You finished every step!",
+    "nextStep": "Next step"
+  },
+  "concepts": {
+    "routes": {
+      "name": "app.get",
+      "definition": "A route tells the server what to answer to a request: `app.get(path, (req, res) => { … })` runs the function for every GET request on that path. `req` is the request received, `res` the response to send."
+    },
+    "json": {
+      "name": "res.json",
+      "definition": "`res.json(value)` turns a value into JSON text and sends it, with the `Content-Type: application/json` header that tells the client how to read it. JSON is the language most APIs speak."
+    },
+    "collection": {
+      "name": "GET /bricks",
+      "definition": "A REST API gives every kind of thing a URL: the collection `/bricks` holds every brick, `/bricks/1` is one of them. A GET request reads, it never changes anything."
+    },
+    "query": {
+      "name": "req.query",
+      "definition": "The query string is the part of the URL after `?`: `/bricks?color=red&max=10`. Express reads it into `req.query`, an object whose values are always text. It's the usual way to filter, sort or search."
+    },
+    "params": {
+      "name": "req.params",
+      "definition": "A route parameter is a part of the path that changes: in `app.get('/bricks/:id', …)`, `/bricks/3` gives `req.params.id === '3'`. Like everything in a URL, it is text."
+    },
+    "status": {
+      "name": "res.status",
+      "definition": "Every response has a status code: `200` OK, `201` created, `204` nothing to send back, `400` bad request, `404` not found, `500` the server failed. `res.status(404)` sets it before sending."
+    },
+    "post": {
+      "name": "POST",
+      "definition": "POST sends data to the server to create something new. The data travels in the request body, as JSON; `app.use(express.json())` reads it into `req.body`. The answer is `201 Created`, with what was created."
+    },
+    "validation": {
+      "name": "400",
+      "definition": "Never trust what a client sends. Check the body before using it, and answer `400 Bad Request` with an explanation when it's wrong: nothing is saved."
+    },
+    "put": {
+      "name": "PUT",
+      "definition": "PUT replaces a whole resource with the one sent in the body: `PUT /bricks/1` sends a complete brick. The id comes from the URL, not from the body."
+    },
+    "patch": {
+      "name": "PATCH",
+      "definition": "PATCH changes only some fields of a resource: `PATCH /bricks/1` with `{ \"stock\": 0 }` changes the stock and keeps everything else."
+    },
+    "delete": {
+      "name": "DELETE",
+      "definition": "DELETE removes a resource: `DELETE /bricks/3`. There is nothing left to send back, so the answer is `204 No Content`, without a body."
+    },
+    "rest": {
+      "name": "REST",
+      "definition": "A REST API names things, not actions: plural nouns (`/bricks`), ids in the path (`/bricks/1`), related things nested (`/bricks/1/orders`). The action is the HTTP method: GET, POST, PUT, PATCH, DELETE."
+    },
+    "middleware": {
+      "name": "next()",
+      "definition": "A middleware is a function `(req, res, next)` that runs before the routes, added with `app.use`. It answers itself, or calls `next()` to hand the request to what comes next. If it does neither, the request waits forever."
+    },
+    "auth": {
+      "name": "401 / 403",
+      "definition": "An API protects its writes: the client proves who it is in a header, like `X-API-Key`. Without it, `401 Unauthorized`; with a wrong one, `403 Forbidden`. A middleware given to a route checks it before the handler."
+    },
+    "errors": {
+      "name": "(err, req, res, next)",
+      "definition": "An error handler is a middleware with four parameters, added after the routes. Express calls it when a route throws or calls `next(error)`. It logs the details for you and sends the client a short message."
+    },
+    "database": {
+      "name": "await db.all",
+      "definition": "A database keeps the data when the server restarts. Its calls take time, so they return promises: inside an `async` function, `await db.all(sql)` waits for every row, `await db.get(sql)` for the first one."
+    },
+    "placeholders": {
+      "name": "?",
+      "definition": "A placeholder `?` in the SQL stands for a value given apart, in an array: `db.all('… WHERE color = ?', [color])`. The database never reads the value as SQL, which blocks SQL injection."
+    },
+    "insert": {
+      "name": "db.run",
+      "definition": "`await db.run(sql, params)` runs an INSERT, UPDATE or DELETE. It resolves with `changes`, the number of rows changed, and `lastInsertRowid`, the id the database gave to the last row inserted."
+    },
+    "changes": {
+      "name": "result.changes",
+      "definition": "UPDATE and DELETE change every row their `WHERE` matches: without `WHERE`, every row. `result.changes` tells how many rows changed: 0 means nothing matched, so the resource doesn't exist."
+    },
+    "fetch": {
+      "name": "fetch",
+      "definition": "In the browser, `fetch(url, options)` sends a request to an API and returns a promise of the response; `response.json()` reads its JSON body. The page and the API must agree on URLs, fields and status codes: that's the API contract."
+    }
+  },
+  "levels": {
+    "hello": {
+      "title": "Say hello",
+      "intro": [
+        "Welcome to the Brick Shop API! In every step you write the server of a toy brick shop, with Node.js and Express. Your code goes in `server.js` on the left; on the right, an HTTP client sends requests to your server and the server log shows what happens.",
+        "The first two lines create an app, the last one starts it on port 3000. In between come the routes: `app.get('/hello', handler)` runs `handler` for every GET request on `/hello`, and `res.send(text)` sends the answer."
+      ],
+      "goal": "Add a route so that `GET /hello` answers with the text `Brick Shop API`.",
+      "hints": [
+        "The route goes between `const app = express()` and `app.listen(…)`, like the example below.",
+        "The text must be exactly `Brick Shop API`, between quotes: `res.send('Brick Shop API')`."
+      ],
+      "recap": "A route is a method (`get`), a path (`/hello`) and a function that answers with `res`. Any other method or path gets a `404`.",
+      "checks": {
+        "answers": "`GET /hello` answers `200`",
+        "text": "The answer is `Brick Shop API`",
+        "getOnly": "`POST /hello` still answers `404`"
+      }
+    },
+    "shop-info": {
+      "title": "Speak JSON",
+      "intro": [
+        "Plain text is fine for a human, but programs need structure. APIs answer in JSON: the same objects you write in JavaScript, as text.",
+        "`res.json(value)` sends any object or array as JSON, with a `Content-Type: application/json` header. Open the Headers tab of the response to see it."
+      ],
+      "goal": "Make `GET /shop` answer the JSON object `{ name: 'Brick Shop', open: true }`.",
+      "hints": [
+        "Replace `res.send(…)` with `res.json(…)`.",
+        "`open` is the boolean `true`, without quotes."
+      ],
+      "recap": "`res.json` sends data a program can read: `response.open` is a real `true`, not text.",
+      "checks": {
+        "isJson": "The answer is JSON",
+        "name": "`name` is `Brick Shop`",
+        "open": "`open` is `true`"
+      }
+    },
+    "list-bricks": {
+      "title": "List the bricks",
+      "intro": [
+        "The shop sells bricks: they're in the `bricks` array. In a REST API, the whole collection lives at a plural URL, `/bricks`.",
+        "The route already exists, but its function never answers. Send it: the client shows what the request receives, and the server log shows the request waiting forever."
+      ],
+      "goal": "Make `GET /bricks` answer with the 5 bricks of the array, as JSON.",
+      "hints": [
+        "`res.json` takes arrays as well as objects.",
+        "One line is enough: `res.json(bricks)`."
+      ],
+      "recap": "The collection URL `/bricks` returns the list. A route that never answers leaves the client waiting: every route must send something.",
+      "checks": {
+        "answers": "`GET /bricks` answers `200`",
+        "all": "The answer holds 5 bricks",
+        "same": "The bricks are the ones of the array"
+      }
+    },
+    "filter-color": {
+      "title": "Filter by color",
+      "intro": [
+        "A customer only wants red bricks. Instead of a new URL, the client adds a query string: `/bricks?color=red`. Express reads it into `req.query`: here `req.query.color` is `'red'`.",
+        "Without `?color=…`, `req.query.color` is `undefined`: then answer every brick, as before."
+      ],
+      "goal": "Make `GET /bricks?color=red` answer only the red bricks, and `GET /bricks` every brick.",
+      "hints": [
+        "`bricks.filter((b) => b.color === color)` keeps the bricks of that color.",
+        "Use `if (color) { return res.json(…) }` before the last line, so that only one answer is sent."
+      ],
+      "recap": "`req.query` holds the filters of the URL. A filter that matches nothing is not an error: it's an empty list, `200 []`.",
+      "checks": {
+        "red": "`?color=red` gives the bricks 1 and 4",
+        "blue": "`?color=blue` gives the brick 2",
+        "all": "Without a color, every brick",
+        "unknown": "An unknown color gives an empty list `[]`"
+      }
+    },
+    "one-brick": {
+      "title": "One brick",
+      "intro": [
+        "Each brick has its own URL: `/bricks/2`. The route `/bricks/:id` matches them all, and Express puts the changing part in `req.params.id`.",
+        "This route looks right, but `GET /bricks/2` sends nothing back. Everything in a URL is text: `req.params.id` is `'2'`, and `2 === '2'` is false."
+      ],
+      "goal": "Fix the route so that `GET /bricks/2` answers the brick whose id is 2.",
+      "hints": [
+        "`Number(req.params.id)` turns `'2'` into `2`.",
+        "Compare `b.id` with the number: `const id = Number(req.params.id)`."
+      ],
+      "recap": "`req.params` and `req.query` are always text: convert them with `Number()` before comparing them to numbers.",
+      "checks": {
+        "second": "`GET /bricks/2` answers the brick 2",
+        "fourth": "`GET /bricks/4` answers the brick 4",
+        "isJson": "`GET /bricks/1` answers JSON"
+      }
+    },
+    "not-found": {
+      "title": "Not found",
+      "intro": [
+        "Ask for `GET /bricks/99`: the answer is `200 OK`, with nothing inside. The client can't tell that the brick doesn't exist.",
+        "The status code tells it: `res.status(404).json(…)` sends a `404 Not Found`. Write `return` in front of it, so that the function stops there: a request gets one answer, never two."
+      ],
+      "goal": "Answer `404` with `{ error: 'Brick not found' }` when the brick doesn't exist.",
+      "hints": [
+        "`find` returns `undefined` when nothing matches: test it with `if (!brick) { … }`.",
+        "Without `return`, the code goes on to `res.json(brick)`, which tries to send a second answer: the server log shows the error."
+      ],
+      "recap": "The status code is the first thing a client reads: `200` it worked, `404` it doesn't exist. `return res.status(…)…` ends the function after the answer.",
+      "checks": {
+        "missing": "`GET /bricks/99` answers `404`",
+        "message": "The body is `{ error: 'Brick not found' }`",
+        "once": "Only one answer is sent: no error in the log",
+        "found": "`GET /bricks/1` still answers the brick 1"
+      }
+    },
+    "create-brick": {
+      "title": "Create a brick",
+      "intro": [
+        "To add a brick, the client sends a POST request to the collection, `/bricks`, with the new brick in the body, as JSON.",
+        "Express doesn't read the body by itself: until you add `app.use(express.json())` after `const app = express()`, `req.body` is `undefined`. The new brick then gets the next id, joins the array, and the answer is `201 Created` with the brick."
+      ],
+      "goal": "Make `POST /bricks` add the brick sent, with a new id, and answer `201` with it.",
+      "hints": [
+        "Add `app.use(express.json())` right after `const app = express()`.",
+        "Build `{ id: nextId++, name: req.body.name, … }`, then `bricks.push(brick)`.",
+        "`res.status(201).json(brick)`."
+      ],
+      "recap": "POST on a collection creates. The server chooses the id, never the client, and `201` says that something new exists.",
+      "checks": {
+        "created": "`POST /bricks` answers `201`",
+        "returned": "The answer is the new brick, with the id 6",
+        "listed": "`GET /bricks` lists it afterwards",
+        "newIds": "Two bricks get two ids: 6 and 7"
+      }
+    },
+    "validate": {
+      "title": "Refuse bad bricks",
+      "intro": [
+        "Send `{ \"color\": \"red\", \"price\": 1 }`: a brick without a name joins the shop. Anything can arrive in a request: a field missing, text where a number is expected.",
+        "Check the body before using it. When it's wrong, answer `400 Bad Request` with an `error` that explains why, and save nothing."
+      ],
+      "goal": "Answer `400` with an `error` when the name is missing or the price is not a number.",
+      "hints": [
+        "`typeof price !== 'number'` is true for `'cheap'` and for a missing price.",
+        "Test at the top of the function, and `return res.status(400).json({ error: '…' })`.",
+        "The check comes before `nextId++` and `push`: a refused brick takes no id."
+      ],
+      "recap": "Validate first, then act. `400` means the client must fix its request; the `error` tells it what to fix.",
+      "checks": {
+        "noName": "A brick without a name gets `400`",
+        "badPrice": "A price that is not a number gets `400`",
+        "explains": "The `400` body has an `error`",
+        "notAdded": "Refused bricks are not added",
+        "stillCreates": "A correct brick still gets `201`"
+      }
+    },
+    "replace-brick": {
+      "title": "Replace a brick",
+      "intro": [
+        "To change a brick, PUT sends it whole to its URL: `PUT /bricks/1` with a name, a color, a price and a stock. The brick at that index is replaced by the one sent.",
+        "The id comes from the URL: even if the body holds another `id`, the brick keeps its own. And an unknown id is a `404`, like for GET."
+      ],
+      "goal": "Make `PUT /bricks/:id` replace the brick with the body and answer it, or answer `404`.",
+      "hints": [
+        "`findIndex` returns `-1` when nothing matches.",
+        "`{ ...req.body, id: bricks[index].id }` copies the body and puts the right id last, so it wins.",
+        "`bricks[index] = brick`, then `res.json(brick)`."
+      ],
+      "recap": "PUT replaces the whole resource at a URL. The URL decides which one, so the id never comes from the body.",
+      "checks": {
+        "replaced": "`PUT /bricks/1` answers the new brick",
+        "kept": "`GET` reads the new brick afterwards",
+        "missing": "An unknown id answers `404`",
+        "sameId": "An `id` in the body doesn't change the id"
+      }
+    },
+    "patch-brick": {
+      "title": "Change only the stock",
+      "intro": [
+        "The brick 1 is sold out: the client only wants to send `{ \"stock\": 0 }`. Try it: this PATCH route rebuilds the brick from the body, and the name, color and price disappear.",
+        "PATCH changes only the fields sent. The spread operator merges two objects: `{ ...brick, ...req.body }` starts from the brick and lets the body overwrite what it holds."
+      ],
+      "goal": "Make `PATCH /bricks/:id` change only the fields sent and keep the others.",
+      "hints": [
+        "Replace the object built field by field with `{ ...brick, ...req.body }`.",
+        "Add `id: brick.id` at the end, so that the body can't change the id."
+      ],
+      "recap": "PUT replaces, PATCH merges. With spread, the last object wins: `{ ...old, ...changes, id }`.",
+      "checks": {
+        "onlyStock": "`{ stock: 0 }` changes only the stock",
+        "kept": "`GET` reads the change afterwards",
+        "twoFields": "Two fields sent, two fields changed",
+        "sameId": "An `id` in the body doesn't change the id"
+      }
+    },
+    "delete-brick": {
+      "title": "Remove a brick",
+      "intro": [
+        "The yellow plate is gone for good: `DELETE /bricks/3` removes it.",
+        "Once it's removed, there is nothing to send back: the answer is `204 No Content`, with an empty body. As always, an id that doesn't exist answers `404`."
+      ],
+      "goal": "Make `DELETE /bricks/:id` remove the brick and answer `204`, or `404`.",
+      "hints": [
+        "Find its index with `findIndex`, then `bricks.splice(index, 1)` removes it.",
+        "`res.status(204).send()` sends the status without a body."
+      ],
+      "recap": "DELETE removes, `204` confirms with nothing to read. After it, `GET` on the same URL answers `404`.",
+      "checks": {
+        "noContent": "`DELETE /bricks/3` answers `204` without a body",
+        "gone": "`GET /bricks/3` answers `404` afterwards",
+        "others": "The other bricks are still there",
+        "missing": "An unknown id answers `404`"
+      }
+    },
+    "brick-orders": {
+      "title": "Orders of a brick",
+      "intro": [
+        "Someone wrote `GET /getOrdersOfBrick?brickId=1`. It works, but it's not REST: a verb in the URL, and the brick hidden in the query string.",
+        "In REST, URLs name things: the orders of the brick 1 are `/bricks/1/orders`, nested under the brick they belong to. The method already says the action: GET reads."
+      ],
+      "goal": "Replace the route with `GET /bricks/:id/orders`, which answers `404` for an unknown brick.",
+      "hints": [
+        "The id now comes from `req.params.id`, converted with `Number()`.",
+        "`bricks.some((b) => b.id === id)` tells whether the brick exists.",
+        "Remove the old route: a URL with a verb should not stay."
+      ],
+      "recap": "Nouns in the URL, the action in the method. A brick with no orders answers `[]`; a brick that doesn't exist answers `404`.",
+      "checks": {
+        "nested": "`GET /bricks/1/orders` gives the orders 1 and 4",
+        "empty": "A brick without orders gives `[]`",
+        "missing": "An unknown brick answers `404`",
+        "noVerb": "`/getOrdersOfBrick` is gone"
+      }
+    },
+    "logger": {
+      "title": "Log every request",
+      "intro": [
+        "To know what the server does, it logs every request. Instead of a `console.log` in each route, one middleware runs before all of them: `app.use(fn)`.",
+        "Send a request: it logs, then waits forever. A middleware receives a third parameter, `next`: calling it hands the request to the next middleware or route."
+      ],
+      "goal": "Make the middleware log every request and then let the routes answer.",
+      "hints": [
+        "Add `next` to the parameters: `(req, res, next)`.",
+        "Call `next()` after the `console.log`."
+      ],
+      "recap": "Middleware runs in the order of `app.use`, before the routes added after it. It either answers or calls `next()`.",
+      "checks": {
+        "answers": "`GET /bricks` answers again",
+        "logs": "`GET /bricks` is logged",
+        "every": "Every request is logged, even a `404`"
+      }
+    },
+    "api-key": {
+      "title": "Protect deletion",
+      "intro": [
+        "Anyone can delete a brick. Writes need a key: the client sends it in a header, `X-API-Key: brick-secret`, and `req.get('x-api-key')` reads it.",
+        "The check lives in `requireKey`, a middleware given only to the DELETE route, before its handler. Without a key the answer is `401 Unauthorized`, with a wrong one `403 Forbidden`; reading stays open."
+      ],
+      "goal": "Make `requireKey` answer `401` without a key, `403` with a wrong key, and go on with the right one.",
+      "hints": [
+        "`const key = req.get('x-api-key')` is `undefined` when the header is missing.",
+        "`return res.status(401).json({ error: '…' })` stops before `next()`.",
+        "In the client, the Headers tab takes one `Name: value` per line."
+      ],
+      "recap": "A middleware given to one route guards only that route. `401`: who are you? `403`: I know, and it's no.",
+      "checks": {
+        "noKey": "Without a key, `401`",
+        "wrongKey": "With a wrong key, `403`",
+        "rightKey": "With `brick-secret`, the brick is deleted: `204`",
+        "kept": "Refused deletions delete nothing, `GET` stays open"
+      }
+    },
+    "error-handler": {
+      "title": "Handle errors",
+      "intro": [
+        "`GET /bricks/1/price/USD` converts a price. Try `GBP`: the rate doesn't exist, the code throws, and Express answers `500` with the error itself. The client reads details about your code it should never see.",
+        "An error handler takes four parameters, `(err, req, res, next)`, and goes after the routes. Express calls it when a route throws: log `err` for you, send the client a short message."
+      ],
+      "goal": "Add an error handler that logs the error with `console.error` and answers `500` with `{ error: 'Something went wrong' }`.",
+      "hints": [
+        "`app.use((err, req, res, next) => { … })`, after the route and before `app.listen`.",
+        "Express only sees an error handler when it has exactly four parameters: keep `next`, even unused.",
+        "`console.error(err.message)` then `res.status(500).json({ error: 'Something went wrong' })`."
+      ],
+      "recap": "One error handler, at the end, catches what every route throws. Details go to the log, the client gets a `500` and a short message.",
+      "checks": {
+        "works": "`/bricks/1/price/USD` still answers `0.27`",
+        "json": "An unknown currency answers `500` with the JSON error",
+        "noLeak": "The answer shows nothing of the error",
+        "logged": "The error is logged with `console.error`"
+      }
+    },
+    "sql-list": {
+      "title": "Read the database",
+      "intro": [
+        "An array lives in memory: restart the server and every change is gone. From now on, the bricks live in the SQLite database you know, with its `bricks` and `orders` tables, shown below the client.",
+        "`require('./db')` gives `db`. Its calls return promises: mark the function `async`, then `await db.all('SELECT …')` waits for the rows."
+      ],
+      "goal": "Make `GET /bricks` answer every row of the `bricks` table.",
+      "hints": [
+        "Put `async` before `(req, res) =>`, then `const bricks = await db.all('SELECT * FROM bricks')`.",
+        "Remove the old array: the data now comes from the database."
+      ],
+      "recap": "The route doesn't change, the source does. `async` and `await` wait for the database without blocking the server.",
+      "checks": {
+        "answers": "`GET /bricks` answers `200`",
+        "ten": "The answer holds the 10 bricks of the table",
+        "rows": "The bricks are the rows of the table"
+      }
+    },
+    "sql-injection": {
+      "title": "Block SQL injection",
+      "intro": [
+        "This route glues the color into the SQL. Ask for `?color=it's`: the quote breaks the query, `500`. Worse, `?color=x' OR '1'='1` turns the condition into one that is always true: every brick comes out. That's SQL injection.",
+        "The fix: write `?` where the value goes, and give the values apart, in an array. The database never reads them as SQL."
+      ],
+      "goal": "Use a `?` placeholder so that the color can never change the query.",
+      "hints": [
+        "The SQL becomes `'SELECT * FROM bricks WHERE color = ?'`.",
+        "The values come second: `db.all(sql, [color])`."
+      ],
+      "recap": "Never build SQL with `+` or a template literal from what a client sends: always `?` and an array of values.",
+      "checks": {
+        "filters": "`?color=red` gives the bricks 1 and 4",
+        "quote": "`?color=it's` answers `200 []`",
+        "injection": "The injection gives `[]`, not every brick",
+        "placeholder": "The SQL uses `color = ?`"
+      }
+    },
+    "sql-insert": {
+      "title": "Insert a brick",
+      "intro": [
+        "Creating a brick is now an `INSERT`. `await db.run(sql, params)` runs it and resolves with `lastInsertRowid`, the id the database gave to the new row.",
+        "Answer with the brick as it's stored: read it back with `db.get` and that id."
+      ],
+      "goal": "Make `POST /bricks` insert the brick and answer `201` with the stored row.",
+      "hints": [
+        "`INSERT INTO bricks (name, color, price, stock) VALUES (?, ?, ?, ?)`, with `[name, color, price, stock]`.",
+        "`const result = await db.run(…)`, then `db.get('SELECT * FROM bricks WHERE id = ?', [result.lastInsertRowid])`."
+      ],
+      "recap": "The database picks the id, `lastInsertRowid` tells which one. The new brick survives a restart of the server.",
+      "checks": {
+        "created": "`POST /bricks` answers `201`",
+        "newId": "The new brick gets the id 11",
+        "stored": "The row is in the `bricks` table",
+        "readable": "`GET /bricks/11` reads it"
+      }
+    },
+    "sql-changes": {
+      "title": "Update with WHERE",
+      "intro": [
+        "Send `PATCH /bricks/3` with a stock of 40 and look at the table: every brick now has 40. The `UPDATE` has no `WHERE`, so it changes every row.",
+        "`db.run` resolves with `changes`, the number of rows changed. With the right `WHERE`, 0 means no brick has that id: answer `404`."
+      ],
+      "goal": "Change only the brick of the URL, and answer `404` when `PATCH` or `DELETE` change no row.",
+      "hints": [
+        "`UPDATE bricks SET stock = ? WHERE id = ?`, with `[req.body.stock, req.params.id]`.",
+        "`if (result.changes === 0) { return res.status(404).json({ error: 'Brick not found' }) }`, in both routes."
+      ],
+      "recap": "No `UPDATE` or `DELETE` without `WHERE`. `result.changes` turns \"nothing matched\" into a `404`.",
+      "checks": {
+        "onlyOne": "`PATCH /bricks/3` changes only the brick 3",
+        "patchMissing": "`PATCH /bricks/99` answers `404`",
+        "deleted": "`DELETE /bricks/2` answers `204` and removes one row",
+        "deleteMissing": "`DELETE /bricks/99` answers `404`"
+      }
+    },
+    "shop-fetch": {
+      "title": "Open the shop",
+      "intro": [
+        "The last piece: the shop page. Its code, in the `shop.js` tab, calls your API with `fetch`: it lists the bricks in stock and orders one with a click. It's fixed, so your API must give it exactly what it asks for.",
+        "Read it like a contract: which URL, which method, which fields it sends, which fields it reads in the answer. The page shows the result above the client."
+      ],
+      "goal": "Make the shop work: `GET /bricks?inStock=true` for the bricks in stock, `POST /orders` to store an order.",
+      "hints": [
+        "`req.query.inStock` is the text `'true'`; then `WHERE stock > 0`.",
+        "The `orders` table needs `customer`, `brick_id`, `quantity` and `ordered_on`: `date('now')` gives today. Its `status` is `pending` by default.",
+        "Refuse a quantity below 1 with `400`, then answer `201` with the stored order: the page reads its `id` and `status`."
+      ],
+      "recap": "That's a full stack: the page fetches, the API validates and answers, the database keeps. Every step of this course is in this one.",
+      "checks": {
+        "inStock": "`?inStock=true` gives the 8 bricks in stock",
+        "everyBrick": "`GET /bricks` still gives the 10 bricks",
+        "ordered": "`POST /orders` answers `201` with the id 9 and the status `pending`",
+        "stored": "The order is in the `orders` table",
+        "badQuantity": "A quantity of 0 answers `400`"
+      }
+    }
+  }
+}

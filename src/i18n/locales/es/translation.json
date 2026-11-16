@@ -1,0 +1,617 @@
+{
+  "app": {
+    "name": "Brick Shop API",
+    "title": "Brick Shop API: aprende Node.js y Express",
+    "description": "Aprende desarrollo backend con Node.js y Express construyendo la API de una tienda de bloques de juguete: rutas, JSON, CRUD, códigos de estado, middleware, errores y SQL en 20 pasos guiados."
+  },
+  "language": {
+    "label": "Idioma",
+    "names": {
+      "en": "English",
+      "fr": "Français",
+      "es": "Español",
+      "it": "Italiano",
+      "de": "Deutsch"
+    }
+  },
+  "footer": {
+    "github": "Código fuente en GitHub",
+    "linkedin": "LinkedIn",
+    "blog": "Blog"
+  },
+  "codeComments": {
+    "helloRoute": "Responde a GET /hello con el texto Brick Shop API",
+    "sendObject": "Envía un objeto en su lugar: { name: 'Brick Shop', open: true }",
+    "sendBricks": "Responde con el array bricks, en JSON",
+    "alwaysText": "siempre texto",
+    "filterByColor": "Si hay un color, responde solo los bloques de ese color",
+    "paramIsText": "req.params.id es texto: '2' no es 2",
+    "answer404": "¿No hay bloque? Responde 404 con { error: 'Brick not found' }",
+    "readBody": "Construye el bloque desde req.body, dale nextId++ como id y añádelo a bricks",
+    "answer201": "Responde 201 Created con el nuevo bloque",
+    "validateFirst": "Responde primero 400 si falta el nombre o si el precio no es un número",
+    "replaceAtIndex": "Responde 404 si index es -1; si no, reemplaza el bloque por req.body conservando su id",
+    "patchOnlySent": "Solo deben cambiar los campos enviados: conserva los demás",
+    "removeBrick": "Elimina el bloque y responde 204, o 404 si no existe",
+    "restUrls": "Convierte esto en GET /bricks/:id/orders, con 404 para un bloque desconocido",
+    "callNext": "Nada responde: pasa la petición a las rutas",
+    "headerAnyCase": "mayúsculas o minúsculas, da igual",
+    "checkKey": "401 sin cabecera X-API-Key, 403 si no es brick-secret",
+    "errorHandlerLast": "Añade aquí un manejador de errores, después de las rutas",
+    "readFromDb": "Lee los bloques de la base de datos en su lugar",
+    "neverGlue": "Nunca pegues un valor en el SQL: usa un marcador ?",
+    "insertRow": "Inserta el bloque y responde 201 con la fila tal como la guardó la base de datos",
+    "forgotWhere": "¿Qué bloques cambia esta consulta?",
+    "noRowNotFound": "¿Ninguna fila cambiada? El bloque no existe: 404",
+    "shopNeedsBricks": "La tienda pide GET /bricks?inStock=true: solo los bloques en stock",
+    "shopNeedsOrders": "La tienda envía { brickId, quantity, customer }: guarda el pedido y responde 201"
+  },
+  "steps": {
+    "label": "Pasos",
+    "step": "Paso {{number}}: {{title}}",
+    "stepDone": "Paso {{number}}: {{title}}, hecho",
+    "tooltip": "{{number}}. {{title}}"
+  },
+  "lesson": {
+    "meta": "Paso {{step}} de {{total}}",
+    "goal": "Tu objetivo: ",
+    "firstHint": "¿Necesitas una pista?",
+    "nextHint": "Otra pista",
+    "hintCount": "{{current}} de {{total}}",
+    "showSolution": "Enséñame la solución",
+    "confirmLabel": "¿Reemplazar tu código por la solución?",
+    "confirmText": "Tu código se reemplazará por la solución.",
+    "replaceCode": "Reemplazar mi código",
+    "keepTrying": "Sigo intentándolo",
+    "definition": "Definición"
+  },
+  "editor": {
+    "label": "Editor de código",
+    "files": "Archivo",
+    "tabs": {
+      "server": "server.js",
+      "shop": "shop.js"
+    },
+    "code": {
+      "server": "Código del servidor",
+      "shop": "Código de la página de la tienda"
+    },
+    "startOver": "Empezar de nuevo",
+    "run": "Ejecutar",
+    "runShortcut": "Reiniciar el servidor con tu código (Ctrl+Intro)",
+    "shopFixed": "La página de la tienda es fija: lee <strong>shop.js</strong> para saber qué pide a la API, y escribe tus rutas en <strong>server.js</strong>."
+  },
+  "client": {
+    "label": "Cliente HTTP",
+    "method": "Método",
+    "url": "URL",
+    "send": "Enviar",
+    "presets": "Prueba",
+    "preset": "Rellenar el cliente con {{request}}",
+    "tabs": {
+      "body": "Cuerpo",
+      "headers": "Cabeceras"
+    },
+    "body": "Cuerpo de la petición, en JSON",
+    "headers": "Cabeceras de la petición, un Nombre: valor por línea",
+    "response": "Respuesta",
+    "empty": "Envía una petición para ver lo que responde el servidor.",
+    "time": "{{ms}} ms",
+    "noBody": "Sin cuerpo",
+    "requestTabs": "Partes de la petición",
+    "responseTabs": "Partes de la respuesta",
+    "noResponse": "Sin respuesta: la petición sigue esperando. Cada ruta debe terminar con `res.send()`, `res.json()`… o llamar a `next()`.",
+    "timeout": "Sin respuesta tras {{seconds}} s: la petición se abandonó.",
+    "stopped": "El servidor está parado: corrige el error que muestra el registro del servidor, se reinicia en cuanto tu código se ejecuta."
+  },
+  "log": {
+    "title": "Registro del servidor",
+    "empty": "Nada todavía. Aquí aparecen las peticiones, la salida de `console.log` y los errores.",
+    "noResponse": "sin respuesta",
+    "timeout": "tiempo agotado",
+    "notices": {
+      "restarted": "Servidor reiniciado con tu código",
+      "databaseLoading": "Cargando la base de datos…",
+      "databaseFailed": "No se pudo cargar la base de datos: recarga la página."
+    }
+  },
+  "database": {
+    "title": "Base de datos",
+    "tables": "Tablas",
+    "rows_one": "{{count}} fila",
+    "rows_other": "{{count}} filas",
+    "noRows": "Ninguna fila",
+    "null": "NULL"
+  },
+  "shop": {
+    "label": "Página de la tienda"
+  },
+  "errors": {
+    "syntax": "Error de sintaxis: {{message}}",
+    "runtime": "{{name}}: {{message}}",
+    "infiniteLoop": "Este bucle nunca termina: se detuvo tras {{count}} vueltas. Revisa su condición.",
+    "noApp": "No hay aplicación: créala con `const app = express()`.",
+    "atLine": "{{error}} (línea {{line}})"
+  },
+  "check": {
+    "title": "Comprobaciones",
+    "running": "Comprobando…",
+    "count_one": "{{passed}} de {{count}} comprobación superada",
+    "count_other": "{{passed}} de {{count}} comprobaciones superadas",
+    "status": {
+      "pass": "superada",
+      "fail": "todavía no",
+      "error": "el servidor falló"
+    },
+    "solved": "¡Paso completado!",
+    "finished": "¡Has terminado todos los pasos!",
+    "nextStep": "Siguiente paso"
+  },
+  "concepts": {
+    "routes": {
+      "name": "app.get",
+      "definition": "Una ruta le dice al servidor qué responder a una petición: `app.get(path, (req, res) => { … })` ejecuta la función para cada petición GET en esa ruta. `req` es la petición recibida, `res` la respuesta que se envía."
+    },
+    "json": {
+      "name": "res.json",
+      "definition": "`res.json(value)` convierte un valor en texto JSON y lo envía, con la cabecera `Content-Type: application/json` que le dice al cliente cómo leerlo. JSON es el idioma de la mayoría de las API."
+    },
+    "collection": {
+      "name": "GET /bricks",
+      "definition": "Una API REST da una URL a cada tipo de cosa: la colección `/bricks` contiene todos los bloques, `/bricks/1` es uno de ellos. Una petición GET lee, nunca cambia nada."
+    },
+    "query": {
+      "name": "req.query",
+      "definition": "La query string es la parte de la URL tras `?`: `/bricks?color=red&max=10`. Express la guarda en `req.query`, un objeto cuyos valores son siempre texto. Es la forma habitual de filtrar, ordenar o buscar."
+    },
+    "params": {
+      "name": "req.params",
+      "definition": "Un parámetro de ruta es una parte de la ruta que cambia: en `app.get('/bricks/:id', …)`, `/bricks/3` da `req.params.id === '3'`. Como todo lo que va en una URL, es texto."
+    },
+    "status": {
+      "name": "res.status",
+      "definition": "Cada respuesta tiene un código de estado: `200` OK, `201` creado, `204` nada que devolver, `400` petición incorrecta, `404` no encontrado, `500` el servidor falló. `res.status(404)` lo fija antes de enviar."
+    },
+    "post": {
+      "name": "POST",
+      "definition": "POST envía datos al servidor para crear algo nuevo. Los datos viajan en el cuerpo de la petición, en JSON; `app.use(express.json())` los guarda en `req.body`. La respuesta es `201 Created`, con lo que se creó."
+    },
+    "validation": {
+      "name": "400",
+      "definition": "Nunca confíes en lo que envía un cliente. Comprueba el cuerpo antes de usarlo y responde `400 Bad Request` con una explicación si está mal: no se guarda nada."
+    },
+    "put": {
+      "name": "PUT",
+      "definition": "PUT reemplaza un recurso entero por el que se envía en el cuerpo: `PUT /bricks/1` envía un bloque completo. El id viene de la URL, no del cuerpo."
+    },
+    "patch": {
+      "name": "PATCH",
+      "definition": "PATCH cambia solo algunos campos de un recurso: `PATCH /bricks/1` con `{ \"stock\": 0 }` cambia el stock y conserva todo lo demás."
+    },
+    "delete": {
+      "name": "DELETE",
+      "definition": "DELETE elimina un recurso: `DELETE /bricks/3`. No queda nada que devolver, así que la respuesta es `204 No Content`, sin cuerpo."
+    },
+    "rest": {
+      "name": "REST",
+      "definition": "Una API REST nombra cosas, no acciones: sustantivos en plural (`/bricks`), ids en la ruta (`/bricks/1`), cosas relacionadas anidadas (`/bricks/1/orders`). La acción es el método HTTP: GET, POST, PUT, PATCH, DELETE."
+    },
+    "middleware": {
+      "name": "next()",
+      "definition": "Un middleware es una función `(req, res, next)` que se ejecuta antes de las rutas, añadida con `app.use`. O responde él mismo, o llama a `next()` para pasar la petición a lo siguiente. Si no hace ninguna de las dos cosas, la petición espera para siempre."
+    },
+    "auth": {
+      "name": "401 / 403",
+      "definition": "Una API protege sus escrituras: el cliente demuestra quién es en una cabecera, como `X-API-Key`. Sin ella, `401 Unauthorized`; con una incorrecta, `403 Forbidden`. Un middleware dado a una ruta lo comprueba antes del manejador."
+    },
+    "errors": {
+      "name": "(err, req, res, next)",
+      "definition": "Un manejador de errores es un middleware con cuatro parámetros, añadido después de las rutas. Express lo llama cuando una ruta lanza un error o llama a `next(error)`. Registra los detalles para ti y envía al cliente un mensaje corto."
+    },
+    "database": {
+      "name": "await db.all",
+      "definition": "Una base de datos conserva los datos cuando el servidor se reinicia. Sus llamadas tardan, así que devuelven promesas: dentro de una función `async`, `await db.all(sql)` espera todas las filas, `await db.get(sql)` la primera."
+    },
+    "placeholders": {
+      "name": "?",
+      "definition": "Un marcador `?` en el SQL representa un valor dado aparte, en un array: `db.all('… WHERE color = ?', [color])`. La base de datos nunca lee el valor como SQL, lo que bloquea la inyección SQL."
+    },
+    "insert": {
+      "name": "db.run",
+      "definition": "`await db.run(sql, params)` ejecuta un INSERT, UPDATE o DELETE. Se resuelve con `changes`, el número de filas cambiadas, y `lastInsertRowid`, el id que la base de datos dio a la última fila insertada."
+    },
+    "changes": {
+      "name": "result.changes",
+      "definition": "UPDATE y DELETE cambian todas las filas que encuentra su `WHERE`: sin `WHERE`, todas las filas. `result.changes` dice cuántas filas cambiaron: 0 significa que nada coincidió, así que el recurso no existe."
+    },
+    "fetch": {
+      "name": "fetch",
+      "definition": "En el navegador, `fetch(url, options)` envía una petición a una API y devuelve una promesa de la respuesta; `response.json()` lee su cuerpo JSON. La página y la API deben coincidir en URL, campos y códigos de estado: es el contrato de la API."
+    }
+  },
+  "levels": {
+    "hello": {
+      "title": "Di hola",
+      "intro": [
+        "¡Bienvenido a Brick Shop API! En cada paso escribes el servidor de una tienda de bloques de juguete, con Node.js y Express. Tu código va en `server.js` a la izquierda; a la derecha, un cliente HTTP envía peticiones a tu servidor y el registro del servidor muestra lo que pasa.",
+        "Las dos primeras líneas crean una aplicación, la última la arranca en el puerto 3000. En medio van las rutas: `app.get('/hello', handler)` ejecuta `handler` para cada petición GET en `/hello`, y `res.send(text)` envía la respuesta."
+      ],
+      "goal": "Añade una ruta para que `GET /hello` responda con el texto `Brick Shop API`.",
+      "hints": [
+        "La ruta va entre `const app = express()` y `app.listen(…)`, como en el ejemplo de abajo.",
+        "El texto debe ser exactamente `Brick Shop API`, entre comillas: `res.send('Brick Shop API')`."
+      ],
+      "recap": "Una ruta es un método (`get`), una ruta (`/hello`) y una función que responde con `res`. Cualquier otro método o ruta recibe un `404`.",
+      "checks": {
+        "answers": "`GET /hello` responde `200`",
+        "text": "La respuesta es `Brick Shop API`",
+        "getOnly": "`POST /hello` sigue respondiendo `404`"
+      }
+    },
+    "shop-info": {
+      "title": "Habla JSON",
+      "intro": [
+        "El texto plano le basta a una persona, pero los programas necesitan estructura. Las API responden en JSON: los mismos objetos que escribes en JavaScript, como texto.",
+        "`res.json(value)` envía cualquier objeto o array como JSON, con una cabecera `Content-Type: application/json`. Abre la pestaña Cabeceras de la respuesta para verla."
+      ],
+      "goal": "Haz que `GET /shop` responda el objeto JSON `{ name: 'Brick Shop', open: true }`.",
+      "hints": [
+        "Reemplaza `res.send(…)` por `res.json(…)`.",
+        "`open` es el booleano `true`, sin comillas."
+      ],
+      "recap": "`res.json` envía datos que un programa puede leer: `response.open` es un `true` de verdad, no texto.",
+      "checks": {
+        "isJson": "La respuesta es JSON",
+        "name": "`name` es `Brick Shop`",
+        "open": "`open` es `true`"
+      }
+    },
+    "list-bricks": {
+      "title": "Lista los bloques",
+      "intro": [
+        "La tienda vende bloques: están en el array `bricks`. En una API REST, la colección entera vive en una URL en plural, `/bricks`.",
+        "La ruta ya existe, pero su función nunca responde. Envía la petición: el cliente muestra lo que recibe, y el registro del servidor muestra la petición esperando para siempre."
+      ],
+      "goal": "Haz que `GET /bricks` responda los 5 bloques del array, en JSON.",
+      "hints": [
+        "`res.json` acepta arrays igual que objetos.",
+        "Basta una línea: `res.json(bricks)`."
+      ],
+      "recap": "La URL de la colección `/bricks` devuelve la lista. Una ruta que nunca responde deja al cliente esperando: cada ruta debe enviar algo.",
+      "checks": {
+        "answers": "`GET /bricks` responde `200`",
+        "all": "La respuesta tiene 5 bloques",
+        "same": "Son los bloques del array"
+      }
+    },
+    "filter-color": {
+      "title": "Filtra por color",
+      "intro": [
+        "Un cliente solo quiere bloques rojos. En vez de una URL nueva, el cliente añade una query string: `/bricks?color=red`. Express la guarda en `req.query`: aquí `req.query.color` es `'red'`.",
+        "Sin `?color=…`, `req.query.color` es `undefined`: entonces responde todos los bloques, como antes."
+      ],
+      "goal": "Haz que `GET /bricks?color=red` responda solo los bloques rojos, y `GET /bricks` todos.",
+      "hints": [
+        "`bricks.filter((b) => b.color === color)` conserva los bloques de ese color.",
+        "Usa `if (color) { return res.json(…) }` antes de la última línea, para enviar una sola respuesta."
+      ],
+      "recap": "`req.query` contiene los filtros de la URL. Un filtro que no encuentra nada no es un error: es una lista vacía, `200 []`.",
+      "checks": {
+        "red": "`?color=red` da los bloques 1 y 4",
+        "blue": "`?color=blue` da el bloque 2",
+        "all": "Sin color, todos los bloques",
+        "unknown": "Un color desconocido da una lista vacía `[]`"
+      }
+    },
+    "one-brick": {
+      "title": "Un solo bloque",
+      "intro": [
+        "Cada bloque tiene su propia URL: `/bricks/2`. La ruta `/bricks/:id` las reconoce todas, y Express pone la parte que cambia en `req.params.id`.",
+        "Esta ruta parece correcta, pero `GET /bricks/2` no devuelve nada. Todo lo que va en una URL es texto: `req.params.id` es `'2'`, y `2 === '2'` es falso."
+      ],
+      "goal": "Corrige la ruta para que `GET /bricks/2` responda el bloque cuyo id es 2.",
+      "hints": [
+        "`Number(req.params.id)` convierte `'2'` en `2`.",
+        "Compara `b.id` con el número: `const id = Number(req.params.id)`."
+      ],
+      "recap": "`req.params` y `req.query` son siempre texto: conviértelos con `Number()` antes de compararlos con números.",
+      "checks": {
+        "second": "`GET /bricks/2` responde el bloque 2",
+        "fourth": "`GET /bricks/4` responde el bloque 4",
+        "isJson": "`GET /bricks/1` responde JSON"
+      }
+    },
+    "not-found": {
+      "title": "No encontrado",
+      "intro": [
+        "Pide `GET /bricks/99`: la respuesta es `200 OK`, sin nada dentro. El cliente no puede saber que el bloque no existe.",
+        "El código de estado se lo dice: `res.status(404).json(…)` envía un `404 Not Found`. Escribe `return` delante, para que la función se detenga ahí: una petición recibe una respuesta, nunca dos."
+      ],
+      "goal": "Responde `404` con `{ error: 'Brick not found' }` cuando el bloque no existe.",
+      "hints": [
+        "`find` devuelve `undefined` cuando nada coincide: compruébalo con `if (!brick) { … }`.",
+        "Sin `return`, el código sigue hasta `res.json(brick)`, que intenta enviar una segunda respuesta: el registro del servidor muestra el error."
+      ],
+      "recap": "El código de estado es lo primero que lee un cliente: `200` funcionó, `404` no existe. `return res.status(…)…` termina la función tras la respuesta.",
+      "checks": {
+        "missing": "`GET /bricks/99` responde `404`",
+        "message": "El cuerpo es `{ error: 'Brick not found' }`",
+        "once": "Se envía una sola respuesta: ningún error en el registro",
+        "found": "`GET /bricks/1` sigue respondiendo el bloque 1"
+      }
+    },
+    "create-brick": {
+      "title": "Crea un bloque",
+      "intro": [
+        "Para añadir un bloque, el cliente envía una petición POST a la colección, `/bricks`, con el nuevo bloque en el cuerpo, en JSON.",
+        "Express no lee el cuerpo por sí solo: hasta que añadas `app.use(express.json())` después de `const app = express()`, `req.body` es `undefined`. Luego el nuevo bloque recibe el siguiente id, se une al array, y la respuesta es `201 Created` con el bloque."
+      ],
+      "goal": "Haz que `POST /bricks` añada el bloque enviado, con un id nuevo, y responda `201` con él.",
+      "hints": [
+        "Añade `app.use(express.json())` justo después de `const app = express()`.",
+        "Construye `{ id: nextId++, name: req.body.name, … }` y luego `bricks.push(brick)`.",
+        "`res.status(201).json(brick)`."
+      ],
+      "recap": "POST sobre una colección crea. El servidor elige el id, nunca el cliente, y `201` dice que existe algo nuevo.",
+      "checks": {
+        "created": "`POST /bricks` responde `201`",
+        "returned": "La respuesta es el nuevo bloque, con el id 6",
+        "listed": "`GET /bricks` lo lista después",
+        "newIds": "Dos bloques reciben dos ids: 6 y 7"
+      }
+    },
+    "validate": {
+      "title": "Rechaza los bloques incorrectos",
+      "intro": [
+        "Envía `{ \"color\": \"red\", \"price\": 1 }`: un bloque sin nombre entra en la tienda. En una petición puede llegar de todo: un campo que falta, texto donde se espera un número.",
+        "Comprueba el cuerpo antes de usarlo. Si está mal, responde `400 Bad Request` con un `error` que explique por qué, y no guardes nada."
+      ],
+      "goal": "Responde `400` con un `error` cuando falta el nombre o el precio no es un número.",
+      "hints": [
+        "`typeof price !== 'number'` es verdadero para `'cheap'` y para un precio que falta.",
+        "Comprueba al principio de la función, y `return res.status(400).json({ error: '…' })`.",
+        "La comprobación va antes de `nextId++` y `push`: un bloque rechazado no gasta id."
+      ],
+      "recap": "Primero validar, después actuar. `400` significa que el cliente debe corregir su petición; el `error` le dice qué corregir.",
+      "checks": {
+        "noName": "Un bloque sin nombre recibe `400`",
+        "badPrice": "Un precio que no es un número recibe `400`",
+        "explains": "El cuerpo del `400` tiene un `error`",
+        "notAdded": "Los bloques rechazados no se añaden",
+        "stillCreates": "Un bloque correcto sigue recibiendo `201`"
+      }
+    },
+    "replace-brick": {
+      "title": "Reemplaza un bloque",
+      "intro": [
+        "Para cambiar un bloque, PUT lo envía entero a su URL: `PUT /bricks/1` con un nombre, un color, un precio y un stock. El bloque en ese índice se reemplaza por el enviado.",
+        "El id viene de la URL: aunque el cuerpo traiga otro `id`, el bloque conserva el suyo. Y un id desconocido es un `404`, como con GET."
+      ],
+      "goal": "Haz que `PUT /bricks/:id` reemplace el bloque por el cuerpo y lo responda, o responda `404`.",
+      "hints": [
+        "`findIndex` devuelve `-1` cuando nada coincide.",
+        "`{ ...req.body, id: bricks[index].id }` copia el cuerpo y pone el id correcto al final, para que gane.",
+        "`bricks[index] = brick` y luego `res.json(brick)`."
+      ],
+      "recap": "PUT reemplaza el recurso entero de una URL. La URL decide cuál, así que el id nunca viene del cuerpo.",
+      "checks": {
+        "replaced": "`PUT /bricks/1` responde el nuevo bloque",
+        "kept": "`GET` lee el nuevo bloque después",
+        "missing": "Un id desconocido responde `404`",
+        "sameId": "Un `id` en el cuerpo no cambia el id"
+      }
+    },
+    "patch-brick": {
+      "title": "Cambia solo el stock",
+      "intro": [
+        "El bloque 1 se ha agotado: el cliente solo quiere enviar `{ \"stock\": 0 }`. Pruébalo: esta ruta PATCH reconstruye el bloque desde el cuerpo, y el nombre, el color y el precio desaparecen.",
+        "PATCH cambia solo los campos enviados. El operador spread fusiona dos objetos: `{ ...brick, ...req.body }` parte del bloque y deja que el cuerpo sobrescriba lo que contiene."
+      ],
+      "goal": "Haz que `PATCH /bricks/:id` cambie solo los campos enviados y conserve los demás.",
+      "hints": [
+        "Reemplaza el objeto construido campo a campo por `{ ...brick, ...req.body }`.",
+        "Añade `id: brick.id` al final, para que el cuerpo no pueda cambiar el id."
+      ],
+      "recap": "PUT reemplaza, PATCH fusiona. Con spread gana el último objeto: `{ ...old, ...changes, id }`.",
+      "checks": {
+        "onlyStock": "`{ stock: 0 }` solo cambia el stock",
+        "kept": "`GET` lee el cambio después",
+        "twoFields": "Dos campos enviados, dos campos cambiados",
+        "sameId": "Un `id` en el cuerpo no cambia el id"
+      }
+    },
+    "delete-brick": {
+      "title": "Elimina un bloque",
+      "intro": [
+        "La placa amarilla no volverá: `DELETE /bricks/3` la elimina.",
+        "Una vez eliminada, no queda nada que devolver: la respuesta es `204 No Content`, con el cuerpo vacío. Como siempre, un id que no existe responde `404`."
+      ],
+      "goal": "Haz que `DELETE /bricks/:id` elimine el bloque y responda `204`, o `404`.",
+      "hints": [
+        "Encuentra su índice con `findIndex` y luego `bricks.splice(index, 1)` lo quita.",
+        "`res.status(204).send()` envía el estado sin cuerpo."
+      ],
+      "recap": "DELETE elimina, `204` lo confirma sin nada que leer. Después, `GET` sobre la misma URL responde `404`.",
+      "checks": {
+        "noContent": "`DELETE /bricks/3` responde `204` sin cuerpo",
+        "gone": "`GET /bricks/3` responde `404` después",
+        "others": "Los demás bloques siguen ahí",
+        "missing": "Un id desconocido responde `404`"
+      }
+    },
+    "brick-orders": {
+      "title": "Los pedidos de un bloque",
+      "intro": [
+        "Alguien escribió `GET /getOrdersOfBrick?brickId=1`. Funciona, pero no es REST: un verbo en la URL, y el bloque escondido en la query string.",
+        "En REST, las URL nombran cosas: los pedidos del bloque 1 son `/bricks/1/orders`, anidados bajo el bloque al que pertenecen. El método ya dice la acción: GET lee."
+      ],
+      "goal": "Reemplaza la ruta por `GET /bricks/:id/orders`, que responde `404` para un bloque desconocido.",
+      "hints": [
+        "El id ahora viene de `req.params.id`, convertido con `Number()`.",
+        "`bricks.some((b) => b.id === id)` dice si el bloque existe.",
+        "Elimina la ruta antigua: una URL con un verbo no debe quedarse."
+      ],
+      "recap": "Sustantivos en la URL, la acción en el método. Un bloque sin pedidos responde `[]`; un bloque que no existe responde `404`.",
+      "checks": {
+        "nested": "`GET /bricks/1/orders` da los pedidos 1 y 4",
+        "empty": "Un bloque sin pedidos da `[]`",
+        "missing": "Un bloque desconocido responde `404`",
+        "noVerb": "`/getOrdersOfBrick` ha desaparecido"
+      }
+    },
+    "logger": {
+      "title": "Registra cada petición",
+      "intro": [
+        "Para saber qué hace el servidor, registra cada petición. En vez de un `console.log` en cada ruta, un solo middleware se ejecuta antes de todas: `app.use(fn)`.",
+        "Envía una petición: se registra y luego espera para siempre. Un middleware recibe un tercer parámetro, `next`: llamarlo pasa la petición al siguiente middleware o ruta."
+      ],
+      "goal": "Haz que el middleware registre cada petición y luego deje responder a las rutas.",
+      "hints": [
+        "Añade `next` a los parámetros: `(req, res, next)`.",
+        "Llama a `next()` después del `console.log`."
+      ],
+      "recap": "Los middleware se ejecutan en el orden de los `app.use`, antes de las rutas añadidas después. O responden, o llaman a `next()`.",
+      "checks": {
+        "answers": "`GET /bricks` vuelve a responder",
+        "logs": "`GET /bricks` queda registrado",
+        "every": "Cada petición queda registrada, incluso un `404`"
+      }
+    },
+    "api-key": {
+      "title": "Protege el borrado",
+      "intro": [
+        "Cualquiera puede eliminar un bloque. Las escrituras necesitan una clave: el cliente la envía en una cabecera, `X-API-Key: brick-secret`, y `req.get('x-api-key')` la lee.",
+        "La comprobación vive en `requireKey`, un middleware que solo recibe la ruta DELETE, antes de su manejador. Sin clave la respuesta es `401 Unauthorized`, con una incorrecta `403 Forbidden`; la lectura sigue abierta."
+      ],
+      "goal": "Haz que `requireKey` responda `401` sin clave, `403` con una clave incorrecta, y continúe con la correcta.",
+      "hints": [
+        "`const key = req.get('x-api-key')` es `undefined` cuando falta la cabecera.",
+        "`return res.status(401).json({ error: '…' })` se detiene antes de `next()`.",
+        "En el cliente, la pestaña Cabeceras acepta un `Name: value` por línea."
+      ],
+      "recap": "Un middleware dado a una ruta solo protege esa ruta. `401`: ¿quién eres? `403`: lo sé, y la respuesta es no.",
+      "checks": {
+        "noKey": "Sin clave, `401`",
+        "wrongKey": "Con una clave incorrecta, `403`",
+        "rightKey": "Con `brick-secret`, el bloque se elimina: `204`",
+        "kept": "Los borrados rechazados no borran nada, `GET` sigue abierto"
+      }
+    },
+    "error-handler": {
+      "title": "Gestiona los errores",
+      "intro": [
+        "`GET /bricks/1/price/USD` convierte un precio. Prueba `GBP`: la tasa no existe, el código lanza un error, y Express responde `500` con el propio error. El cliente lee detalles de tu código que nunca debería ver.",
+        "Un manejador de errores recibe cuatro parámetros, `(err, req, res, next)`, y va después de las rutas. Express lo llama cuando una ruta lanza un error: registra `err` para ti, envía al cliente un mensaje corto."
+      ],
+      "goal": "Añade un manejador de errores que registre el error con `console.error` y responda `500` con `{ error: 'Something went wrong' }`.",
+      "hints": [
+        "`app.use((err, req, res, next) => { … })`, después de la ruta y antes de `app.listen`.",
+        "Express solo reconoce un manejador de errores con exactamente cuatro parámetros: conserva `next`, aunque no lo uses.",
+        "`console.error(err.message)` y luego `res.status(500).json({ error: 'Something went wrong' })`."
+      ],
+      "recap": "Un solo manejador de errores, al final, atrapa lo que lanzan todas las rutas. Los detalles van al registro, el cliente recibe un `500` y un mensaje corto.",
+      "checks": {
+        "works": "`/bricks/1/price/USD` sigue respondiendo `0.27`",
+        "json": "Una moneda desconocida responde `500` con el error en JSON",
+        "noLeak": "La respuesta no muestra nada del error",
+        "logged": "El error se registra con `console.error`"
+      }
+    },
+    "sql-list": {
+      "title": "Lee la base de datos",
+      "intro": [
+        "Un array vive en memoria: reinicia el servidor y se pierden todos los cambios. A partir de ahora, los bloques viven en la base SQLite que ya conoces, con sus tablas `bricks` y `orders`, que se muestran bajo el cliente.",
+        "`require('./db')` da `db`. Sus llamadas devuelven promesas: marca la función como `async` y luego `await db.all('SELECT …')` espera las filas."
+      ],
+      "goal": "Haz que `GET /bricks` responda todas las filas de la tabla `bricks`.",
+      "hints": [
+        "Pon `async` delante de `(req, res) =>` y luego `const bricks = await db.all('SELECT * FROM bricks')`.",
+        "Elimina el array antiguo: los datos vienen ahora de la base de datos."
+      ],
+      "recap": "La ruta no cambia, la fuente sí. `async` y `await` esperan a la base de datos sin bloquear el servidor.",
+      "checks": {
+        "answers": "`GET /bricks` responde `200`",
+        "ten": "La respuesta tiene los 10 bloques de la tabla",
+        "rows": "Son las filas de la tabla"
+      }
+    },
+    "sql-injection": {
+      "title": "Bloquea la inyección SQL",
+      "intro": [
+        "Esta ruta pega el color en el SQL. Pide `?color=it's`: la comilla rompe la consulta, `500`. Peor aún, `?color=x' OR '1'='1` convierte la condición en una siempre verdadera: salen todos los bloques. Eso es la inyección SQL.",
+        "La solución: escribe `?` donde va el valor y da los valores aparte, en un array. La base de datos nunca los lee como SQL."
+      ],
+      "goal": "Usa un marcador `?` para que el color nunca pueda cambiar la consulta.",
+      "hints": [
+        "El SQL pasa a ser `'SELECT * FROM bricks WHERE color = ?'`.",
+        "Los valores van en segundo lugar: `db.all(sql, [color])`."
+      ],
+      "recap": "Nunca construyas SQL con `+` o un template literal a partir de lo que envía un cliente: siempre `?` y un array de valores.",
+      "checks": {
+        "filters": "`?color=red` da los bloques 1 y 4",
+        "quote": "`?color=it's` responde `200 []`",
+        "injection": "La inyección da `[]`, no todos los bloques",
+        "placeholder": "El SQL usa `color = ?`"
+      }
+    },
+    "sql-insert": {
+      "title": "Inserta un bloque",
+      "intro": [
+        "Crear un bloque es ahora un `INSERT`. `await db.run(sql, params)` lo ejecuta y se resuelve con `lastInsertRowid`, el id que la base de datos dio a la nueva fila.",
+        "Responde con el bloque tal como se guardó: vuelve a leerlo con `db.get` y ese id."
+      ],
+      "goal": "Haz que `POST /bricks` inserte el bloque y responda `201` con la fila guardada.",
+      "hints": [
+        "`INSERT INTO bricks (name, color, price, stock) VALUES (?, ?, ?, ?)`, con `[name, color, price, stock]`.",
+        "`const result = await db.run(…)` y luego `db.get('SELECT * FROM bricks WHERE id = ?', [result.lastInsertRowid])`."
+      ],
+      "recap": "La base de datos elige el id, `lastInsertRowid` dice cuál. El nuevo bloque sobrevive a un reinicio del servidor.",
+      "checks": {
+        "created": "`POST /bricks` responde `201`",
+        "newId": "El nuevo bloque recibe el id 11",
+        "stored": "La fila está en la tabla `bricks`",
+        "readable": "`GET /bricks/11` lo lee"
+      }
+    },
+    "sql-changes": {
+      "title": "Actualiza con WHERE",
+      "intro": [
+        "Envía `PATCH /bricks/3` con un stock de 40 y mira la tabla: todos los bloques tienen ahora 40. El `UPDATE` no tiene `WHERE`, así que cambia todas las filas.",
+        "`db.run` se resuelve con `changes`, el número de filas cambiadas. Con el `WHERE` correcto, 0 significa que ningún bloque tiene ese id: responde `404`."
+      ],
+      "goal": "Cambia solo el bloque de la URL, y responde `404` cuando `PATCH` o `DELETE` no cambian ninguna fila.",
+      "hints": [
+        "`UPDATE bricks SET stock = ? WHERE id = ?`, con `[req.body.stock, req.params.id]`.",
+        "`if (result.changes === 0) { return res.status(404).json({ error: 'Brick not found' }) }`, en las dos rutas."
+      ],
+      "recap": "Nunca un `UPDATE` o un `DELETE` sin `WHERE`. `result.changes` convierte «nada coincidió» en un `404`.",
+      "checks": {
+        "onlyOne": "`PATCH /bricks/3` solo cambia el bloque 3",
+        "patchMissing": "`PATCH /bricks/99` responde `404`",
+        "deleted": "`DELETE /bricks/2` responde `204` y elimina una fila",
+        "deleteMissing": "`DELETE /bricks/99` responde `404`"
+      }
+    },
+    "shop-fetch": {
+      "title": "Abre la tienda",
+      "intro": [
+        "La última pieza: la página de la tienda. Su código, en la pestaña `shop.js`, llama a tu API con `fetch`: lista los bloques en stock y pide uno con un clic. Es fijo, así que tu API debe darle exactamente lo que pide.",
+        "Léelo como un contrato: qué URL, qué método, qué campos envía, qué campos lee en la respuesta. La página muestra el resultado encima del cliente."
+      ],
+      "goal": "Haz funcionar la tienda: `GET /bricks?inStock=true` para los bloques en stock, `POST /orders` para guardar un pedido.",
+      "hints": [
+        "`req.query.inStock` es el texto `'true'`; entonces `WHERE stock > 0`.",
+        "La tabla `orders` necesita `customer`, `brick_id`, `quantity` y `ordered_on`: `date('now')` da la fecha de hoy. Su `status` es `pending` por defecto.",
+        "Rechaza una cantidad menor que 1 con `400` y luego responde `201` con el pedido guardado: la página lee su `id` y su `status`."
+      ],
+      "recap": "Eso es una aplicación completa: la página pide, la API valida y responde, la base de datos guarda. Cada paso de este curso está en este.",
+      "checks": {
+        "inStock": "`?inStock=true` da los 8 bloques en stock",
+        "everyBrick": "`GET /bricks` sigue dando los 10 bloques",
+        "ordered": "`POST /orders` responde `201` con el id 9 y el estado `pending`",
+        "stored": "El pedido está en la tabla `orders`",
+        "badQuantity": "Una cantidad de 0 responde `400`"
+      }
+    }
+  }
+}

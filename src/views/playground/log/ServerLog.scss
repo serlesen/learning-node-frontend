@@ -1,0 +1,113 @@
+@use 'config' as *;
+@use 'typography' as *;
+@use 'mixins' as *;
+
+.server-log {
+  @include panel;
+  padding: $spacing-6 $spacing-8;
+  background: $color-ink;
+  border-color: $color-ink;
+  color: $color-white;
+
+  h2 {
+    font-size: $font-size-sm;
+    color: $color-ink-inverse-soft;
+    margin-bottom: $spacing-4;
+  }
+
+  @media (min-width: $breakpoint-desktop) {
+    max-height: 26vh;
+    overflow-y: auto;
+  }
+}
+
+.log-lines {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  @include code($font-size-xs);
+}
+
+.log-line {
+  padding: $spacing-2 0 $spacing-2 $spacing-8;
+  border-top: $border-width solid $color-console-line;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  position: relative;
+
+  &:first-child {
+    border-top: 0;
+  }
+
+  &::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: $color-ink-faint;
+  }
+
+  &.is-notice {
+    color: $color-ink-inverse-soft;
+    font-style: italic;
+
+    &::before {
+      content: '↻';
+    }
+  }
+
+  &.is-request::before {
+    content: '←';
+    color: $color-ink-inverse-soft;
+  }
+
+  &.is-warn {
+    color: $color-yellow-light;
+
+    &::before {
+      content: '!';
+      color: $color-yellow;
+    }
+  }
+
+  &.is-error {
+    color: $color-console-error;
+
+    &::before {
+      content: '×';
+      color: $color-console-error;
+    }
+  }
+}
+
+.log-method {
+  font-weight: $font-weight-semibold;
+  color: $color-yellow-light;
+}
+
+.log-status {
+  color: $color-console-ok;
+
+  &.is-4xx {
+    color: $color-yellow;
+  }
+
+  &.is-5xx {
+    color: $color-console-error;
+  }
+}
+
+.log-time {
+  color: $color-ink-faint;
+}
+
+.log-empty {
+  margin: 0;
+  font-size: $font-size-sm;
+  color: $color-ink-inverse-soft;
+
+  code {
+    color: $color-white;
+    background: $color-console-code;
+    border-color: transparent;
+  }
+}
